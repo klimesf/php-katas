@@ -107,7 +107,7 @@ $solveThousands = function ($number, $string = "") use ($solveUnitsOrder, $prepe
  */
 function convertFromArabic($number)
 {
-	if(!is_integer($number) || $number < 1) {
+	if(!is_numeric($number) || $number < 1) {
 		throw new \InvalidArgumentException();
 	}
 	// PHP bullshit

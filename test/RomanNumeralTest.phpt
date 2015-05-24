@@ -108,6 +108,10 @@ class RomanNumeralTest extends Tester\TestCase
 		\RomanNumeral\convertFromArabic($input);
 	}
 
+	/**
+	 * Provides array of sub-arrays containing invalid input for convertFromArabic().
+	 * @return array
+	 */
 	protected function provideInvalidArabicInput()
 	{
 		return [
