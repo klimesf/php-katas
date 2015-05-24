@@ -94,6 +94,7 @@ class RomanNumeralTest extends Tester\TestCase
 			[1989, "MCMLXXXIX"],
 			[2000, "MM"],
 			[2213, "MMCCXIII"],
+			[3999, "MMMCMXCIX"],
 		];
 	}
 
@@ -117,6 +118,7 @@ class RomanNumeralTest extends Tester\TestCase
 		return [
 			[0],
 			[-1],
+			[4000],
 			[new \stdClass()],
 			[
 				function () {
