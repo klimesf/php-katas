@@ -5,7 +5,7 @@ namespace Test;
 use InvalidArgumentException;
 use Tester;
 use Tester\Assert;
-use RomanNumeral;
+use RomanNumerals;
 
 require __DIR__ . '/bootstrap.php';
 
@@ -44,7 +44,7 @@ class RomanNumeralTest extends Tester\TestCase
 	 */
 	public function testConvertFromArabic($arabic, $roman)
 	{
-		Assert::same($roman, \RomanNumeral\convertFromArabic($arabic));
+		Assert::same($roman, \RomanNumerals\convertFromArabic($arabic));
 	}
 
 	/**
@@ -106,7 +106,7 @@ class RomanNumeralTest extends Tester\TestCase
 	 */
 	public function testConvertFromArabicInvalid($input)
 	{
-		\RomanNumeral\convertFromArabic($input);
+		\RomanNumerals\convertFromArabic($input);
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 
-namespace RomanNumeral;
+namespace RomanNumerals;
 
 /**
  * Adds $number times $numeral to the given string using given $stringModifier function.
@@ -31,11 +31,11 @@ $append = function ($original, $appendix) {
 /**
  * Prepends string to the original.
  * @param string $original
- * @param string $prependix
+ * @param string $prefix
  * @return string
  */
-$prepend = function ($original, $prependix) {
-	return $prependix . $original;
+$prepend = function ($original, $prefix) {
+	return $prefix . $original;
 };
 
 /**
