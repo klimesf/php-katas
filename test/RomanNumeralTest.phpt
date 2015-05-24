@@ -2,6 +2,7 @@
 
 namespace Test;
 
+use InvalidArgumentException;
 use Tester;
 use Tester\Assert;
 use RomanNumeral;
@@ -93,6 +94,31 @@ class RomanNumeralTest extends Tester\TestCase
 			[1989, "MCMLXXXIX"],
 			[2000, "MM"],
 			[2213, "MMCCXIII"],
+		];
+	}
+
+	/**
+	 * Tests convertFromArabic() method with invalid input.
+	 * @param mixed $input
+	 * @dataProvider provideInvalidArabicInput
+	 * @throws InvalidArgumentException
+	 */
+	public function testConvertFromArabicInvalid($input)
+	{
+		\RomanNumeral\convertFromArabic($input);
+	}
+
+	protected function provideInvalidArabicInput()
+	{
+		return [
+			[0],
+			[-1],
+			[new \stdClass()],
+			[
+				function () {
+					echo "fail";
+				}
+			]
 		];
 	}
 
