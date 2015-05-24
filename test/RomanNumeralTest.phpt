@@ -89,6 +89,8 @@ class RomanNumeralTest extends Tester\TestCase
 			[800, "DCCC"],
 			[900, "CM"],
 			[1000, "M"],
+			[1066, "MLXVI"],
+			[1989, "MCMLXXXIX"],
 			[2000, "MM"],
 			[2213, "MMCCXIII"],
 		];
