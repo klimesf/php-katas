@@ -3,17 +3,18 @@
 namespace RomanNumeral;
 
 /**
- * Adds $number times "I" to the given string using given function
+ * Adds $number times $numeral to the given string using given $stringModifier function.
  * @param callable $stringModifier
  * @param integer  $number
+ * @param string   $numeral
  * @param string   $string
  * @return string
  */
-$addOnes = function ($stringModifier, $number, $string = "") use (&$addOnes) {
+$addNumerals = function ($stringModifier, $number, $numeral, $string = "") use (&$addNumerals) {
 	if ($number < 1) {
 		return $string;
 	} else {
-		return $addOnes($stringModifier, $number - 1, $stringModifier($string, "I"));
+		return $addNumerals($stringModifier, $number - 1, $numeral, $stringModifier($string, $numeral));
 	}
 };
 
@@ -37,18 +38,40 @@ $prepend = function ($original, $prependix) {
 	return $prependix . $original;
 };
 
+$solveOrder = function ($number, $numeral, $string) use ($append, $prepend, $addNumerals) {
+	if ($number % 5 < 4) {
+		return $addNumerals($append, $number % 5, $numeral, $string);
+	} else {
+		return $addNumerals($prepend, $number % 5 - 3, $numeral, $string);
+	}
+};
+
 /**
  * Prepends or appends roman one numerals of given number to the given string.
  * @param string $number
  * @param string $string
  * @return string
  */
-$solveOnes = function ($number, $string = "") use ($append, $prepend, $addOnes) {
-	if ($number % 5 < 4) {
-		return $addOnes($append, $number % 5, $string);
-	} else {
-		return $addOnes($prepend, $number % 5 - 3, $string);
-	}
+$solveOnes = function ($number, $string = "") use ($solveOrder) {
+	return $solveOrder($number, "I", $string);
+};
+
+/**
+ * Appends or prepends roman ten numerals of given number to the given string.
+ * @param integer $number
+ * @param string  $string
+ * @return string
+ */
+$solveTens = function ($number, $string = "") use ($solveOrder) {
+	return $solveOrder($number / 10, "X", $string);
+};
+
+$solveHundreds = function ($number, $string = "") use ($solveOrder) {
+	return $solveOrder($number / 100, "C", $string);
+};
+
+$solveThousands = function ($number, $string = "") use ($solveOrder) {
+	return $solveOrder($number / 1000, "M", $string);
 };
 
 /**
@@ -66,20 +89,6 @@ $solveFives = function ($number, $string = "") use ($append) {
 };
 
 /**
- * Appends or prepends roman ten numerals of given number to the given string.
- * @param integer $number
- * @param string  $string
- * @return string
- */
-$solveTens = function ($number, $string = "") use ($append, $prepend) {
-	if ($number % 10 > 8 || ($number > 0 && $number % 10 === 0)) {
-		return $append($string, "X");
-	} else {
-		return $string;
-	}
-};
-
-/**
  * Converts given number in arabic numerals to roman numerals.
  * @param integer $number
  * @return string
@@ -90,6 +99,8 @@ function convertFromArabic($number)
 	global $solveOnes;
 	global $solveFives;
 	global $solveTens;
+	global $solveHundreds;
+	global $solveThousands;
 
-	return $solveOnes($number, $solveFives($number, $solveTens($number)));
+	return $solveOnes($number, $solveFives($number, $solveTens($number, $solveHundreds($number, $solveThousands($number)))));
 }
