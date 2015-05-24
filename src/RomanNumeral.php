@@ -56,6 +56,14 @@ $solveHalvesOrder = function ($number, $numeral, $string = "") use ($append, $pr
 	}
 };
 
+$solveNextUnit = function ($number, $numeral, $string = "") use ($append) {
+	if ($number % 10 > 8) {
+		return $append($string, $numeral);
+	} else {
+		return $string;
+	}
+};
+
 $solveFives = function ($number, $string = "") use ($append, $prepend, $solveHalvesOrder) {
 	return $solveHalvesOrder($number, "V", $string);
 };
@@ -68,16 +76,24 @@ $solveFiveHundreds = function ($number, $string = "") use ($append, $prepend, $s
 	return $solveHalvesOrder($number / 100, "D", $string);
 };
 
-$solveOnes = function ($number, $string = "") use ($solveUnitsOrder, $prepend, $solveFives) {
-	return $solveFives($number, $prepend($string, $solveUnitsOrder($number, "I")));
+$solveOnes = function ($number, $string = "") use ($solveUnitsOrder, $prepend, $solveFives, $solveNextUnit) {
+	return $solveFives($number,
+		$prepend($string,
+			$solveUnitsOrder($number, "I",
+				$solveNextUnit($number, "X"))));
 };
 
-$solveTens = function ($number, $string = "") use ($solveUnitsOrder, $prepend, $solveFifties) {
-	return $solveFifties($number, $prepend($string, $solveUnitsOrder($number / 10, "X")));
+$solveTens = function ($number, $string = "") use ($solveUnitsOrder, $prepend, $solveFifties, $solveNextUnit) {
+	return $solveFifties($number,
+		$prepend($string,
+			$solveUnitsOrder($number / 10, "X",
+				$solveNextUnit($number / 10, "C"))));
 };
 
-$solveHundreds = function ($number, $string = "") use ($solveUnitsOrder, $prepend, $solveFiveHundreds) {
-	return $solveFiveHundreds($number, $prepend($string, $solveUnitsOrder($number / 100, "C")));
+$solveHundreds = function ($number, $string = "") use ($solveUnitsOrder, $prepend, $solveFiveHundreds, $solveNextUnit) {
+	return $solveFiveHundreds($number, $prepend($string,
+		$solveUnitsOrder($number / 100, "C",
+			$solveNextUnit($number / 100, "M"))));
 };
 
 $solveThousands = function ($number, $string = "") use ($solveUnitsOrder, $prepend) {
