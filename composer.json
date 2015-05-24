@@ -1,0 +1,14 @@
+{
+    "name": "klimesf/roman-kata-tdd",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Filip Klimes",
+            "email": "filip@filipklimes.cz"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "nette/tester": "^1.4"
+    }
+}
